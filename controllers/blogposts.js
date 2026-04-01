@@ -117,7 +117,7 @@ export async function update(req, res) {
                 content
             },
             {
-                returnDocument:"after"
+                returnDocument: "after"
             })
         if (!updatedBlogPost) {
             return res.status(404).json({
@@ -125,6 +125,37 @@ export async function update(req, res) {
             })
         }
         res.status(200).json({ updatedBlogPost })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+
+export async function uploadBlogPostCover(req, res) {
+    try {
+        const { id } = req.params
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                message: 'invalid blog post id'
+            })
+        }
+        if (!req.file) {
+            return res.status(400).json({
+                message: 'error uploading file'
+            })
+        }
+
+        const blogPostCover = await BlogPost.findByIdAndUpdate(id, { cover: req.file.path }, { returnDocument: 'after' })
+
+        if (!blogPostCover) {
+            return res.status(404).json({
+                message: 'blog post not found'
+            })
+        }
+
+        res.status(200).json({ blogPostCover })
     } catch (error) {
         res.status(500).json({
             message: error.message
