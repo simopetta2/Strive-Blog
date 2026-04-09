@@ -3,7 +3,12 @@ import Author from '../models/Author.js'
 
 export async function findAll(req, res) {
     try {
-        const authors = await Author.find()
+        const { page, limit } = req.query
+        const authorsQuery = Author.find()
+        if (page && limit) {
+            authorsQuery.skip((page - 1) * limit).limit(limit)
+        }
+        const authors = await authorsQuery
         res.status(200).json(authors)
     }
     catch (error) {
