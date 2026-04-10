@@ -48,14 +48,16 @@ export async function create(req, res) {
             surname,
             email,
             birthDate,
-            avatar
+            avatar,
+            password
         } = req.body
         const author = new Author({
             name,
             surname,
             email,
             birthDate,
-            avatar
+            avatar,
+            password
         })
         const newAuthor = await author.save()
         res.status(201).json(newAuthor)
