@@ -3,7 +3,11 @@ import bcrypt from 'bcrypt'
 const AuthorSchema = new mongoose.Schema({
     name: String,
     surname: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
     birthDate: String,
     avatar: String,
     password: String

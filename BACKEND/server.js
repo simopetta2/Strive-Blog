@@ -5,6 +5,7 @@ import { connect } from './db.js'
 import authorRouter from './routes/authors.js'
 import blogRouter from './routes/blogposts.js'
 import commentsRouter from './routes/comments.js'
+import authRouter from './routes/auth.js'
 
 dotenv.config()
 connect()
@@ -18,6 +19,7 @@ app.get('/', (request, response) => {
 app.use('/authors', authorRouter)
 app.use('/blogposts', blogRouter)
 app.use('/', commentsRouter)
+app.use('/auth', authRouter)
 
 app.listen(process.env.PORT, () => {
     console.log('server in ascolto');
