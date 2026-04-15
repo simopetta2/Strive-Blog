@@ -6,6 +6,8 @@ import authorRouter from './routes/authors.js'
 import blogRouter from './routes/blogposts.js'
 import commentsRouter from './routes/comments.js'
 import authRouter from './routes/auth.js'
+import passport from 'passport'
+import googleStrategy from './strategy/googleStrategy.js'
 
 dotenv.config()
 connect()
@@ -16,6 +18,8 @@ app.use(express.json())
 app.get('/', (request, response) => {
     response.status(200).json({ message: 'server funzionante' })
 })
+
+passport.use(googleStrategy)
 app.use('/authors', authorRouter)
 app.use('/blogposts', blogRouter)
 app.use('/', commentsRouter)

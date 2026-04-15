@@ -49,3 +49,8 @@ export async function login(req, res) {
         })
     }
 }
+
+export function googleCallback(req, res) {
+    const user = req.user
+    return res.status(200).json(user)
+}
