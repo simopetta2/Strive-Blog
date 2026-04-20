@@ -1,14 +1,18 @@
-import express from "express";
-import { findAll, findById, create, cancell, update, uploadBlogPostCover } from "../controllers/blogposts.js";
-import parser from "../middleware/cloudinary.js";
-import { authentication } from "../middleware/authentication.js";
+import express from 'express';
+import * as blogPostController from '../controllers/blogposts.js';
+import cloudinaryUploader from '../middleware/cloudinary.js';
+import { authentication } from '../middleware/authentication.js';
 
-const blogRouter = express.Router()
-blogRouter.get('/', findAll)
-blogRouter.get('/:id', findById)
-blogRouter.post('/', authentication, create)
-blogRouter.delete('/:id', cancell)
-blogRouter.put('/:id', update)
-blogRouter.patch('/:id/cover', parser.single('cover'), uploadBlogPostCover)
+const router = express.Router();
 
-export default blogRouter
+router.get("/", blogPostController.findAll);
+router.get("/:id", blogPostController.findById);
+
+
+router.post("/", authentication, cloudinaryUploader.single("cover"), blogPostController.create);
+
+router.put("/:id", authentication, cloudinaryUploader.single("cover"), blogPostController.update);
+router.delete("/:id", authentication, blogPostController.cancell);
+router.patch("/:id/cover", authentication, cloudinaryUploader.single("cover"), blogPostController.uploadBlogPostCover);
+
+export default router;

@@ -1,29 +1,31 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
+
 const AuthorSchema = new mongoose.Schema({
-    name: String,
-    surname: String,
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    birthDate: String,
-    avatar: String,
-    password: String
-})
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    birthDate: { type: String },
+    avatar: { type: String },
+    password: { type: String, required: false },
+    googleId: { type: String }
+});
+
 
 AuthorSchema.pre('save', async function () {
-    if (!this.isModified('password')) {
+
+    if (!this.password || !this.isModified('password')) {
         return;
     }
 
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt)
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
 
+    } catch (error) {
+        throw error;
+    }
+});
 
-})
-
-
-const Author = mongoose.model('Author', AuthorSchema)
-export default Author
+const Author = mongoose.model('Author', AuthorSchema);
+export default Author;

@@ -1,3 +1,56 @@
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
 body {
-  font-family: "Ubuntu", sans-serif;
+  background-color: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Effetto Hover sulle Card */
+.post-card {
+  transition: var(--transition);
+  cursor: pointer;
+  border: none !important;
+}
+
+.post-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Overlay per la Categoria */
+.category-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  padding: 8px 15px;
+}
+
+/* Stilizzazione Avatar */
+.author-avatar {
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+}
+
+.post-card:hover .author-avatar {
+  border-color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Testi */
+.post-title {
+  color: #2d3436;
+  line-height: 1.4;
+  font-weight: 800;
+}
+
+.author-name {
+  font-size: 0.9rem;
+  color: #2d3436;
 }
